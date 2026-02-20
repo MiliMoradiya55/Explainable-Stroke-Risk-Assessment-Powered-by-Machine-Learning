@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1 class="display-4 animate__animated animate__fadeInDown">Stroke Risk Prediction</h1>
+        <p class="lead animate__animated animate__fadeInUp animate__delay-1s">
+            Harness the power of AI to assess your stroke risk based on health parameters.
+        </p>
+        {% if not session.user_id %}
+            <a href="{{ url_for('signup') }}" class="btn btn-primary btn-lg me-2 animate__animated animate__fadeInUp animate__delay-2s">Get Started</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg animate__animated animate__fadeInUp animate__delay-2s">Login</a>
+        {% else %}
+            <a href="{{ url_for('predict') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp animate__delay-2s">Make a Prediction</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-center p-4 h-100">
+                <div class="card-body">
+                    <i class="fas fa-robot fa-3x mb-3" style="color: #667eea;"></i>
+                    <h3>AI-Powered</h3>
+                    <p>Advanced machine learning model trained on real medical data.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center p-4 h-100">
+                <div class="card-body">
+                    <i class="fas fa-lock fa-3x mb-3" style="color: #764ba2;"></i>
+                    <h3>Secure & Private</h3>
+                    <p>Your health data is encrypted and stored safely.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center p-4 h-100">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-3x mb-3" style="color: #43e97b;"></i>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your risk over time with detailed charts and history.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

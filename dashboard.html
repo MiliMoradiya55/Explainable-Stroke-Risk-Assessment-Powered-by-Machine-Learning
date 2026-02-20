@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 animate__animated animate__fadeInDown">Welcome back, {{ session.user_name }}! 👋</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 animate__animated animate__fadeInLeft">
+                <div class="card-header">
+                    <i class="fas fa-bolt"></i> Quick Actions
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('predict') }}" class="btn btn-success mb-2 w-100"><i class="fas fa-plus-circle"></i> New Prediction</a>
+                    <a href="{{ url_for('history') }}" class="btn btn-info mb-2 w-100"><i class="fas fa-history"></i> View History</a>
+                    <a href="{{ url_for('chart') }}" class="btn btn-warning mb-2 w-100"><i class="fas fa-chart-pie"></i> View Charts</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 animate__animated animate__fadeInRight">
+                <div class="card-header">
+                    <i class="fas fa-clock"></i> Recent Predictions
+                </div>
+                <div class="card-body">
+                    {% if predictions %}
+                        <ul class="list-group list-group-flush">
+                        {% for p in predictions %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ p.timestamp[:10] }}</span>
+                                <span>
+                                    {% if p.prediction == 1 %}
+                                        <span class="risk-high">High Risk</span>
+                                    {% else %}
+                                        <span class="risk-low">Low Risk</span>
+                                    {% endif %}
+                                </span>
+                                <a href="{{ url_for('report', pred_id=p.id) }}" class="btn btn-sm btn-primary">View</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No predictions yet. <a href="{{ url_for('predict') }}">Make one now!</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

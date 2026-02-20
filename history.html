@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 animate__animated animate__fadeInDown"><i class="fas fa-history"></i> Prediction History</h2>
+    {% if predictions %}
+        <div class="table-responsive animate__animated animate__fadeInUp">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Glucose</th>
+                        <th>BMI</th>
+                        <th>Prediction</th>
+                        <th>Probability</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for p in predictions %}
+                    <tr>
+                        <td>{{ p.timestamp[:10] }}</td>
+                        <td>{{ p.age }}</td>
+                        <td>{{ p.gender }}</td>
+                        <td>{{ "%.1f"|format(p.avg_glucose_level) }}</td>
+                        <td>{{ "%.1f"|format(p.bmi) if p.bmi else 'N/A' }}</td>
+                        <td>
+                            {% if p.prediction == 1 %}
+                                <span class="risk-high">High</span>
+                            {% else %}
+                                <span class="risk-low">Low</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ "%.2f"|format(p.probability * 100) }}%</td>
+                        <td><a href="{{ url_for('report', pred_id=p.id) }}" class="btn btn-sm btn-primary"><i class="fas fa-file-alt"></i> Report</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info animate__animated animate__fadeIn">
+            No predictions yet. <a href="{{ url_for('predict') }}">Make your first prediction</a>.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+

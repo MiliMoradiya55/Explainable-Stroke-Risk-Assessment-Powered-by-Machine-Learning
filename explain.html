@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 text-center animate__animated animate__fadeInDown">Understanding Stroke Risk</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 animate__animated animate__fadeInLeft">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i> Key Risk Factors
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Age:</strong> Risk increases significantly after 55.</li>
+                        <li class="list-group-item"><strong>Hypertension:</strong> High blood pressure is the #1 contributor.</li>
+                        <li class="list-group-item"><strong>Heart Disease:</strong> Existing conditions like atrial fibrillation elevate risk.</li>
+                        <li class="list-group-item"><strong>Diabetes:</strong> High glucose levels damage blood vessels.</li>
+                        <li class="list-group-item"><strong>Obesity:</strong> BMI over 30 increases risk.</li>
+                        <li class="list-group-item"><strong>Smoking:</strong> Damages vessel walls and promotes clots.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 animate__animated animate__fadeInRight">
+                <div class="card-header">
+                    <i class="fas fa-robot"></i> How Our AI Works
+                </div>
+                <div class="card-body">
+                    <p>We use a <strong>Random Forest classifier</strong> trained on a dataset of over 5,000 patients. The model analyzes your inputs and compares them with patterns learned from historical data to predict stroke probability.</p>
+                    <p><strong>Accuracy:</strong> Our model achieves ~85% accuracy on test data. However, this is for educational purposes only. Always consult a healthcare professional for medical advice.</p>
+                    <div class="text-center mt-4">
+                        <i class="fas fa-chart-bar fa-4x" style="color: #667eea;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

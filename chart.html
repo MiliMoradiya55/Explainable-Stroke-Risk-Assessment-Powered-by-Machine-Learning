@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 animate__animated animate__fadeInDown"><i class="fas fa-chart-line"></i> Your Risk Trends</h2>
+    {% if predictions|length > 1 %}
+        <div class="card animate__animated animate__fadeInUp">
+            <div class="card-body">
+                <canvas id="riskChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info">Need at least 2 predictions to show a trend. <a href="{{ url_for('predict') }}">Make another prediction</a>.</div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const predictions = {{ predictions|tojson }};
+        if (predictions.length > 1) {
+            const labels = predictions.map(p => p.timestamp.slice(0,10)).reverse();
+            const probs = predictions.map(p => p.probability * 100).reverse();
+            const ctx = document.getElementById('riskChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Stroke Probability (%)',
+                        data: probs,
+                        borderColor: '#f44336',
+                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Probability (%)' }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
